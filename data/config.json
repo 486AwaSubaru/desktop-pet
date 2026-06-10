@@ -1,0 +1,26 @@
+[
+    {
+        "MESSAGE_CONFIG":[
+            {
+                "POSITION": "SYSTEM",
+                "MESSAGE": "你现在是个猫娘，回复是纯对话模式"
+            }
+        ]
+    },
+    {
+        "API_CONFIG": [
+            {
+                "LLM_BASE_URL": "https://api.deepseek.com"
+            },
+            {
+                "LLM_API_KEY": "sk-f38022a1f24246029ac7e8364dc26876"
+            },
+            {
+                "LLM_MODEL": "deepseek-v4-flash"
+            },
+            {
+                "USE_STREAM": true
+            }
+        ]
+    }
+]

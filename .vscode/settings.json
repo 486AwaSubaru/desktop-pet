@@ -1,0 +1,12 @@
+{
+    "godotTools.editorPath.godot4": "d:\\MySoftware\\Godot\\Godot_v4.6.2-stable_win64.exe",
+    "mcpServers": {
+        "tavily-remote-mcp": {
+            "command": "npx",
+            "args": ["-y", "@tavily/mcp"],
+            "env": {
+                "TAVILY_API_KEY": "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"
+            }
+        }
+    }
+}

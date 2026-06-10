@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://db13pu2gq600p"]
+
+[ext_resource type="PackedScene" uid="uid://dlcp0ralayd1u" path="res://scenes/chat_dialog/chat_dialog.tscn" id="1_fvqdn"]
+
+[node name="Window" type="Window" unique_id=1132546341]
+transparent_bg = true
+oversampling_override = 1.0
+position = Vector2i(0, 36)
+size = Vector2i(500, 700)
+borderless = true
+transparent = true
+
+[node name="chat_dialog" parent="." unique_id=58076127 instance=ExtResource("1_fvqdn")]

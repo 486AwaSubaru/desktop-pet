@@ -1,0 +1,214 @@
+[gd_scene format=3 uid="uid://dlcp0ralayd1u"]
+
+[ext_resource type="Script" uid="uid://bbmmrl6qx4rb8" path="res://scenes/script/chat_dialog.gd" id="1_tpp2o"]
+[ext_resource type="FontFile" uid="uid://viou18k8jsp5" path="res://source/font/乐米栀夏浅风体.ttf" id="1_v67k8"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jxjrn"]
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.18796441, 0.036136743, 0.09109593, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tpp2o"]
+corner_radius_top_left = 8
+corner_radius_top_right = 4
+
+[sub_resource type="Gradient" id="Gradient_aualh"]
+offsets = PackedFloat32Array(0, 0.96666664)
+colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jpso4"]
+gradient = SubResource("Gradient_aualh")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3htuo"]
+bg_color = Color(0.9647059, 0.972549, 0.96862745, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v67k8"]
+content_margin_left = 14.0
+content_margin_top = 6.0
+content_margin_bottom = 6.0
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u1x02"]
+content_margin_left = 8.0
+content_margin_top = 2.0
+content_margin_right = 8.0
+content_margin_bottom = 2.0
+bg_color = Color(0.05882353, 0.5882353, 1, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mrjvy"]
+content_margin_left = 8.0
+content_margin_top = 2.0
+content_margin_right = 8.0
+content_margin_bottom = 2.0
+bg_color = Color(0, 0.39692742, 0.6931274, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+
+[sub_resource type="InputEventKey" id="InputEventKey_aualh"]
+device = -1
+keycode = 4194309
+
+[sub_resource type="Shortcut" id="Shortcut_jpso4"]
+events = [SubResource("InputEventKey_aualh")]
+
+[node name="chat_dialog" type="Control" unique_id=58076127]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource("1_tpp2o")
+
+[node name="background" type="Control" parent="." unique_id=1275563111]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="background" unique_id=1247008638]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_jxjrn")
+
+[node name="container" type="MarginContainer" parent="." unique_id=860745955]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="VC" type="VBoxContainer" parent="container" unique_id=1689395034]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="title" type="MarginContainer" parent="container/VC" unique_id=1156495729]
+layout_mode = 2
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_bottom = 5
+
+[node name="title_text" type="Label" parent="container/VC/title" unique_id=1217232361]
+layout_mode = 2
+theme_override_colors/font_color = Color(0, 0.7393107, 0.90149397, 1)
+theme_override_fonts/font = ExtResource("1_v67k8")
+theme_override_font_sizes/font_size = 24
+text = "喵~~~~~~~"
+horizontal_alignment = 1
+
+[node name="chat_box" type="MarginContainer" parent="container/VC" unique_id=339021190]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_bottom = 14
+
+[node name="ScrollContainer" type="ScrollContainer" parent="container/VC/chat_box" unique_id=240608614]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="container/VC/chat_box/ScrollContainer" unique_id=2006793197]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme_override_constants/separation = 0
+alignment = 2
+
+[node name="TopGradient" type="MarginContainer" parent="container/VC/chat_box" unique_id=1905890450]
+visible = false
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_constants/margin_left = 2
+theme_override_constants/margin_top = 2
+theme_override_constants/margin_right = 8
+
+[node name="PanelContainer" type="PanelContainer" parent="container/VC/chat_box/TopGradient" unique_id=634424207]
+clip_children = 1
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_tpp2o")
+
+[node name="TextureRect" type="TextureRect" parent="container/VC/chat_box/TopGradient/PanelContainer" unique_id=1917966698]
+layout_mode = 2
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_jpso4")
+
+[node name="edit_box" type="MarginContainer" parent="container/VC" unique_id=169690898]
+layout_mode = 2
+
+[node name="VC" type="VBoxContainer" parent="container/VC/edit_box" unique_id=1336820259]
+layout_mode = 2
+
+[node name="tool_line" type="MarginContainer" parent="container/VC/edit_box/VC" unique_id=1852107238]
+layout_mode = 2
+size_flags_vertical = 0
+
+[node name="edit_line" type="MarginContainer" parent="container/VC/edit_box/VC" unique_id=1920202363]
+layout_mode = 2
+theme_override_constants/margin_left = 8
+theme_override_constants/margin_right = 8
+theme_override_constants/margin_bottom = 8
+
+[node name="edit background" type="PanelContainer" parent="container/VC/edit_box/VC/edit_line" unique_id=1701164658]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_3htuo")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="container/VC/edit_box/VC/edit_line/edit background" unique_id=1228266486]
+layout_mode = 2
+
+[node name="chat_edit" type="LineEdit" parent="container/VC/edit_box/VC/edit_line/edit background/HBoxContainer" unique_id=721858820]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.103743516, 0.10374353, 0.103743516, 1)
+theme_override_colors/caret_color = Color(0.59, 0.59, 0.59, 1)
+theme_override_colors/selection_color = Color(0.84313726, 0.8509804, 0.84705883, 1)
+theme_override_fonts/font = ExtResource("1_v67k8")
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_v67k8")
+theme_override_styles/read_only = SubResource("StyleBoxFlat_v67k8")
+theme_override_styles/focus = SubResource("StyleBoxFlat_v67k8")
+placeholder_text = "Type you message"
+caret_blink = true
+
+[node name="MarginContainer" type="MarginContainer" parent="container/VC/edit_box/VC/edit_line/edit background/HBoxContainer" unique_id=676845950]
+layout_mode = 2
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="send_stop_btn" type="Button" parent="container/VC/edit_box/VC/edit_line/edit background/HBoxContainer/MarginContainer" unique_id=1555649159]
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_u1x02")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_mrjvy")
+theme_override_styles/hover = SubResource("StyleBoxFlat_u1x02")
+shortcut = SubResource("Shortcut_jpso4")
+text = "Send"
+
+[connection signal="text_submitted" from="container/VC/edit_box/VC/edit_line/edit background/HBoxContainer/chat_edit" to="." method="_on_chat_edit_text_submitted"]
+[connection signal="pressed" from="container/VC/edit_box/VC/edit_line/edit background/HBoxContainer/MarginContainer/send_stop_btn" to="." method="_on_send_stop_btn_pressed"]

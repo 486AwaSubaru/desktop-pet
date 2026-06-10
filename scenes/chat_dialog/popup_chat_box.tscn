@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://h6p34oi77kgk"]
+
+[ext_resource type="FontFile" uid="uid://viou18k8jsp5" path="res://source/font/乐米栀夏浅风体.ttf" id="1_6k5r6"]
+[ext_resource type="Script" uid="uid://dip5p4dcmjk6v" path="res://scenes/script/popup_chat_box.gd" id="1_m0vty"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_m0vty"]
+bg_color = Color(1, 0.75686276, 0.02745098, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_17pgk"]
+bg_color = Color(1, 0.34117648, 0.13333334, 1)
+corner_radius_top_left = 16
+corner_radius_top_right = 16
+corner_radius_bottom_right = 16
+corner_radius_bottom_left = 16
+
+[node name="popup_chat_box" type="Window" unique_id=2007957292]
+transparent_bg = true
+oversampling_override = 1.0
+borderless = true
+transparent = true
+script = ExtResource("1_m0vty")
+
+[node name="user" type="MarginContainer" parent="." unique_id=893212832]
+offset_right = 200.0
+offset_bottom = 37.0
+size_flags_horizontal = 3
+
+[node name="chat_text_bac" type="PanelContainer" parent="user" unique_id=2068470097]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_m0vty")
+
+[node name="MarginContainer" type="MarginContainer" parent="user/chat_text_bac" unique_id=2080078638]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 8
+
+[node name="chat_text" type="Label" parent="user/chat_text_bac/MarginContainer" unique_id=1280988738]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_fonts/font = ExtResource("1_6k5r6")
+theme_override_font_sizes/font_size = 20
+text = "testtest"
+autowrap_mode = 3
+
+[node name="ai" type="MarginContainer" parent="." unique_id=1867947279]
+offset_right = 200.0
+offset_bottom = 37.0
+size_flags_horizontal = 3
+
+[node name="chat_text_bac" type="PanelContainer" parent="ai" unique_id=2108606203]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_17pgk")
+
+[node name="MarginContainer" type="MarginContainer" parent="ai/chat_text_bac" unique_id=1478104866]
+layout_mode = 2
+theme_override_constants/margin_left = 14
+theme_override_constants/margin_top = 8
+theme_override_constants/margin_right = 14
+theme_override_constants/margin_bottom = 8
+
+[node name="chat_text" type="Label" parent="ai/chat_text_bac/MarginContainer" unique_id=1312809390]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 0
+theme_override_colors/font_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+theme_override_fonts/font = ExtResource("1_6k5r6")
+theme_override_font_sizes/font_size = 20
+text = "testtest"
+autowrap_mode = 3
