@@ -1,3 +1,5 @@
+## 全局初始化脚本（Autoload 单例）
+## 在游戏启动时读取 data/config.json，将 API 配置和消息配置分发给其他单例
 extends Node
 
 const CONFIG_DIR = "res://data/config.json"
@@ -40,7 +42,7 @@ func _ready() -> void:
 		if entry.has("API_CONFIG"):
 			var api_cfg = entry["API_CONFIG"]
 			if api_cfg is Array:
-				LlmRequest.api_config = api_cfg
+				LlmRequest.api_config = api_cfg          # → 传给 LLM 请求模块
 				api_loaded = true
 				print("GlobalInit: 已加载 API_CONFIG")
 			else:
@@ -49,7 +51,7 @@ func _ready() -> void:
 		if entry.has("MESSAGE_CONFIG"):
 			var msg_cfg = entry["MESSAGE_CONFIG"]
 			if msg_cfg is Array:
-				MessageManage.message_config = msg_cfg
+				MessageManage.message_config = msg_cfg    # → 传给消息管理模块
 				message_loaded = true
 				print("GlobalInit: 已加载 MESSAGE_CONFIG")
 			else:

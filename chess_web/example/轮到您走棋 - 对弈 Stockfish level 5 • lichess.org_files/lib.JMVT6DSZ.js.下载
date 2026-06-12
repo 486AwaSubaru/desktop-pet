@@ -1,0 +1,1 @@
+import{a as c}from"./lib.UNZYMI7V.js";import{d as r}from"./lib.NT7GWSKI.js";import{a,d as l,e as s}from"./lib.JDGIJSRT.js";function u(i){let t={el:document.querySelector(".mchat"),...i},o=a([s,l]),e=new c(t,m),p=r(e);t.el.innerHTML="";let n=o(t.el,p);function m(){n=o(n,r(e))}return e}export{u as a};

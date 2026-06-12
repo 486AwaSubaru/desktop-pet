@@ -1,26 +1,34 @@
+## LLM API 请求管理脚本（Autoload 单例）
+## 负责：向 DeepSeek API 发送聊天请求，支持流式（SSE）和非流式（HTTP）两种模式
 extends Node
 
-## 请求成功信号，返回 AI 回复文本
+## 非流式响应信号（返回 message dict: {role, content}）
 signal request_success(ai_message)
 ## 流式传输每段文本信号
 signal stream_event(chunk: String)
-## 请求完成信号（流式 DONE 或非流式完成），用于保存历史
+## 请求完成信号（流式 DONE 或非流式完成），用于保存历史、恢复状态
 signal response_complete(message: Dictionary)
-## 请求失败信号，返回错误描述
+## 请求失败信号
 signal request_error(error_msg: String)
 
+# API 配置（由 GlobalInit 从 config.json 注入）
 var api_config = []
+
+# 非流式请求使用的节点（懒初始化）
 var http_request = null
+
+# 解析后的 API 参数
 var API_KEY = null
 var API_BASE_URL = null
 var MODEL = null
 var USE_STREAM: bool = false
 
 # 流式传输内部状态
-var _stream_sse = null
-var _stream_full_text: String = ""
+var _stream_sse = null       # HTTPEventSource 实例（RefCounted，非 Node）
+var _stream_full_text: String = ""  # 流式累计的完整回复文本
 
 func _ready():
+	# 从 api_config 中解析配置字段
 	for entry in api_config:
 		if not entry is Dictionary:
 			continue
@@ -34,10 +42,11 @@ func _ready():
 			USE_STREAM = entry["USE_STREAM"]
 
 func _process(_delta):
+	# 每帧轮询 SSE 连接，驱动流式数据传输
 	if _stream_sse:
 		_stream_sse.poll()
 
-## 向 AI 发送消息数组
+## 向 AI 发送消息数组（根据配置自动选择流式或非流式）
 func send_message(messages: Array):
 	if not API_KEY or not API_BASE_URL or not MODEL:
 		var msg = "API 配置不完整，请检查 data/config.json"
@@ -50,7 +59,7 @@ func send_message(messages: Array):
 	else:
 		_send_normal(messages)
 
-## 非流式请求
+## 非流式请求：使用 HTTPRequest 发送标准 POST 请求
 func _send_normal(messages: Array):
 	if not http_request:
 		http_request = HTTPRequest.new()
@@ -74,11 +83,12 @@ func _send_normal(messages: Array):
 		push_error("LlmRequest: ", msg)
 		request_error.emit(msg)
 
-## 流式请求
+## 流式请求：使用 HTTPEventSource 建立 SSE 连接
 func _send_stream(messages: Array):
 	_cleanup_stream()
 	_stream_full_text = ""
 
+	# 创建 SSE 客户端
 	_stream_sse = HTTPEventSource.new()
 	_stream_sse.event.connect(_on_stream_sse_event)
 
@@ -97,17 +107,20 @@ func _send_stream(messages: Array):
 		request_error.emit(msg)
 		_cleanup_stream()
 
-## 流式事件回调
+## 流式事件回调：解析 SSE data，处理文本增量
 func _on_stream_sse_event(ev):
+	# DeepSeek 用 [DONE] 标记流结束
 	if ev.data == "[DONE]":
 		var full_message: Dictionary = {"role": "assistant", "content": _stream_full_text}
 		response_complete.emit(full_message)
 		_cleanup_stream()
 		return
 
+	# 解析每个 SSE 事件的 data 字段，提取 delta 增量文本
 	var json = JSON.parse_string(ev.data)
 	if json and json.has("choices") and json.choices.size() > 0:
 		var delta = json.choices[0].delta
+		# 注意：delta 可能无 content（如 role 字段单独出现），需判空
 		if delta and delta.has("content") and delta.content != null:
 			var chunk: String = delta.content
 			_stream_full_text += chunk
@@ -128,7 +141,7 @@ func cancel_request():
 	if http_request:
 		http_request.cancel_request()
 
-## 处理非流式 API 响应
+## 非流式 API 响应回调：校验响应并发送信号
 func _on_request_completed(result, response_code, headers, body):
 	if response_code != 200:
 		var msg = "API 请求失败，HTTP 状态码: " + str(response_code) + " | 响应: " + body.get_string_from_utf8()
@@ -149,6 +162,7 @@ func _on_request_completed(result, response_code, headers, body):
 		request_error.emit(msg)
 		return
 
+	# 提取 AI 回复消息并发出信号
 	var ai_message = response_data.choices[0].message
 	request_success.emit(ai_message)
 	response_complete.emit(ai_message)

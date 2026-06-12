@@ -1,0 +1,1 @@
+var e={Hidden:0,Inside:1,Outside:2,All:3},o={Never:1,OnPremove:2,Always:3},t={Never:0,Below10Secs:1,Always:2},p={Never:0,OnlyAtStart:1,Always:2},y={Click:0,Drag:1,ClickOrDrag:2},n={Never:0,OnlySlowGames:1,Always:2};export{e as a,o as b,t as c,p as d,y as e,n as f};

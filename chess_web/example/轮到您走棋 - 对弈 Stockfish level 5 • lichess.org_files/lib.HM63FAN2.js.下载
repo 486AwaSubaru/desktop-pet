@@ -1,0 +1,1 @@
+import{x as l}from"./lib.INYU5MCA.js";function o(r,n,a){let t=0;return e=>{if(!e.ctrlKey){if(n(e)){a&&e.preventDefault();return}e.preventDefault(),!(e.deltaMode===0&&(t+=e.deltaY,l()&&Math.abs(t)<10))&&(t=0,r(e))}}}export{o as a};

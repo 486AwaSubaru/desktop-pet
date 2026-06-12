@@ -1,0 +1,262 @@
+/* --- Modern Chess Interface --- */
+
+:root {
+    --bg-main: #f8f9fa;
+    --bg-panel: #ffffff;
+    --bg-btn: #f1f3f5;
+    --bg-btn-hover: #e9ecef;
+    --text-main: #212529;
+    --text-muted: #868e96;
+    --danger-color: #ff8787;
+    --accent-smooth: #f1f3f5;
+    --radius-lg: 16px;
+    --radius-sm: 8px;
+    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    --shadow-md: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 30px;
+    overflow-x: hidden;
+}
+
+/* ---- 主容器 ---- */
+.wrapper {
+    display: flex;
+    width: 100%;
+    max-width: 1300px;
+    gap: 30px;
+    align-items: stretch;
+}
+
+/* ---- 左侧 Live2D ---- */
+.live2d-sidebar {
+    width: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+    position: relative;
+}
+.live2d-canvas-placeholder {
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s;
+}
+
+/* ---- 棋盘区域 ---- */
+.board-container {
+    flex: 2;
+    max-width: 72vh;
+    aspect-ratio: 1 / 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#myBoard {
+    width: 100%;
+    height: 100%;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    background: #ffffff;
+}
+
+/* ---- 右侧面板 ---- */
+.right-panel {
+    flex: 1;
+    min-width: 310px;
+    max-width: 360px;
+    background-color: var(--bg-panel);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    padding: 8px;
+}
+
+/* 棋谱 */
+.pgn-section {
+    height: 110px;
+    overflow-y: auto;
+    font-size: 13px;
+    background-color: #fafbfc;
+    border-bottom: 1px solid rgba(0,0,0,0.03);
+}
+.pgn-section::-webkit-scrollbar,
+.chat-messages::-webkit-scrollbar { width: 4px; }
+.pgn-section::-webkit-scrollbar-thumb,
+.chat-messages::-webkit-scrollbar-thumb { background: #e9ecef; border-radius: 4px; }
+
+#pgn-list {
+    display: grid;
+    grid-template-columns: 1.2fr 4fr 4fr;
+    row-gap: 6px;
+    font-family: "SF Mono", SFMono-Regular, Consolas, monospace;
+}
+.move-num { color: #adb5bd; font-weight: 500; }
+.move-text {
+    color: var(--text-main);
+    cursor: pointer;
+    padding: 2px 6px;
+    border-radius: var(--radius-sm);
+    transition: all 0.15s ease;
+}
+.move-text:hover { background-color: var(--bg-btn); }
+
+/* 按钮 */
+.controls-section {
+    padding: 12px 16px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    background-color: var(--bg-panel);
+}
+.btn {
+    background-color: var(--bg-btn);
+    border: none;
+    color: #495057;
+    padding: 12px 0;
+    font-size: 15px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.btn:hover {
+    background-color: var(--bg-btn-hover);
+    color: var(--text-main);
+    transform: translateY(-1px);
+}
+.btn:active { transform: translateY(0); }
+.btn-resign:hover { background-color: var(--danger-color); color: #fff; }
+
+/* 聊天 */
+.chat-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--bg-panel);
+}
+.chat-header {
+    padding: 6px 16px;
+    font-size: 12px;
+    color: #dee2e6;
+    display: flex;
+    align-items: center;
+}
+.chat-header::after {
+    content: '';
+    flex: 1;
+    margin-left: 10px;
+    height: 1px;
+    background-color: #f1f3f5;
+}
+.chat-messages {
+    flex: 1;
+    padding: 8px 16px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    list-style: none;
+}
+.chat-msg {
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+}
+.msg-user-white {
+    width: 8px; height: 8px;
+    background-color: #ced4da;
+    border: 1px solid #adb5bd;
+    border-radius: 2px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+.msg-user-black {
+    width: 8px; height: 8px;
+    background-color: #343a40;
+    border-radius: 2px;
+    margin-right: 10px;
+    flex-shrink: 0;
+}
+.msg-content { color: #495057; font-weight: 400; }
+
+.chat-input-container {
+    padding: 14px 16px 16px;
+    background-color: var(--bg-panel);
+    display: flex;
+    gap: 8px;
+}
+.chat-input {
+    flex: 1;
+    background-color: #f1f3f5;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 24px;
+    font-size: 13px;
+    color: var(--text-main);
+    outline: none;
+    transition: all 0.2s;
+}
+.chat-input::placeholder { color: #ced4da; }
+.chat-input:focus { background-color: #e9ecef; }
+
+.btn-send {
+    width: 38px; height: 38px;
+    padding: 0;
+    border-radius: 50%;
+    background-color: #e9ecef;
+    color: #868e96;
+    transition: all 0.2s;
+}
+.btn-send:hover {
+    background-color: #dee2e6;
+    color: #495057;
+}
+
+/* ---- 兵升变弹窗 ---- */
+#promo-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+#promo-overlay.show { display: flex; }
+#promo-dialog {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 10px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
+    border: 1px solid #eee;
+}
+#promo-dialog img {
+    width: 52px; height: 52px;
+    cursor: pointer;
+    padding: 4px;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    transition: all 0.12s;
+}
+#promo-dialog img:hover {
+    background: #f1f3f5;
+    border-color: #adb5bd;
+    transform: scale(1.08);
+}

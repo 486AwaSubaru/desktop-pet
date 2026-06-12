@@ -1,0 +1,1 @@
+import{i as t,l as s}from"./lib.BE2XRUBU.js";import{p as n}from"./lib.DZVWNRKR.js";var i=n(()=>1e3,o=>t("/pref/zen",{method:"post",body:s({zen:o?1:0})}));function l({unconditional:o}={}){let e=$("body"),r=e.toggleClass("zen").hasClass("zen");window.dispatchEvent(new Event("resize")),(o||!e.hasClass("zen-auto"))&&i(r)}export{l as a};

@@ -1,11 +1,18 @@
+## 消息管理脚本（Autoload 单例）
+## 负责：本地消息历史读写、发送消息组装（含 System Prompt）、消息删除
 extends Node
 
+# 消息历史文件路径
 const MESSAGE_DIR = 'res://data/message_history.json'
+# 从 config.json 中读取的消息配置（如 System Prompt）
 var message_config = []
+# 本地消息历史数组（持久化到文件）
 var message_array = []
 
 func _ready() -> void:
+	# LLM 响应完成后自动存入历史
 	LlmRequest.response_complete.connect(add_message)
+
 	var file = null
 	if not FileAccess.file_exists(MESSAGE_DIR):
 		# 消息文件不存在，创建一个空的
@@ -43,6 +50,8 @@ func _ready() -> void:
 	message_array = parsed
 	print("MessageManage: 已加载消息历史，共 ", message_array.size(), " 条记录")
 
+## 处理并发送消息的完整流程：
+## 复制历史 → 插入 System Prompt → 追加用户消息 → 发送给 LLM
 func process_message_to_send(message: String):
 	# 复制 message_array，不污染原始历史记录
 	var send_array = message_array.duplicate()
@@ -78,12 +87,15 @@ func save_message():
 	file.close()
 	print("MessageManage: 已保存消息历史，共 ", message_array.size(), " 条记录")
 
+## 程序退出时自动保存历史
 func _exit_tree():
 	save_message()
 
+## 追加消息到历史数组（由 response_complete 信号触发）
 func add_message(message):
 	message_array.append(message)
 
+## 按索引删除消息（由 chat_dialog 气泡删除触发）
 func delete_message(index: int):
 	if index >= 0 and index < message_array.size():
 		message_array.remove_at(index)

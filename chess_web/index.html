@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Chess Interface</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- chessboard.js CSS -->
+    <link rel="stylesheet" href="lib/chessboard/css/chessboard-1.0.0.min.css">
+
+    <!-- 自定义样式 -->
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+
+    <div class="wrapper">
+
+        <!-- 左侧 Live2D -->
+        <div class="live2d-sidebar">
+            <div class="live2d-canvas-placeholder"></div>
+        </div>
+
+        <!-- 棋盘 -->
+        <div class="board-container">
+            <div id="myBoard"></div>
+            <div id="status-text" style="text-align:center; margin-top:14px; font-size:14px; font-weight:500; color:var(--text-muted);"></div>
+        </div>
+
+        <!-- 右侧面板 -->
+        <div class="right-panel">
+
+            <!-- 棋谱 -->
+            <div class="pgn-section">
+                <div id="pgn-list"></div>
+            </div>
+
+            <!-- 控制按钮 -->
+            <div class="controls-section">
+                <button class="btn" id="btn-restart" title="New Game"><i class="fas fa-sync-alt"></i></button>
+                <button class="btn" id="btn-flip" title="Flip Board"><i class="fas fa-retweet"></i></button>
+                <button class="btn" id="btn-draw" title="Offer Draw"><i class="fas fa-handshake"></i></button>
+                <button class="btn btn-resign" id="btn-resign" title="Resign"><i class="fas fa-flag"></i></button>
+            </div>
+
+            <!-- 聊天 -->
+            <div class="chat-section">
+                <div class="chat-header">
+                    <i class="fas fa-comment-dots"></i>
+                </div>
+                <ul class="chat-messages" id="chat-messages">
+                    <li class="chat-msg">
+                        <span class="msg-user-white"></span>
+                        <span class="msg-content">GLHF!</span>
+                    </li>
+                    <li class="chat-msg">
+                        <span class="msg-user-black"></span>
+                        <span class="msg-content">u2</span>
+                    </li>
+                </ul>
+                <div class="chat-input-container">
+                    <input type="text" class="chat-input" id="chat-input" placeholder="">
+                    <button class="btn btn-send" id="chat-send"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- 兵升变弹窗 -->
+    <div id="promo-overlay">
+        <div id="promo-dialog"></div>
+    </div>
+
+    <!-- 隐藏状态（被 main.js 使用） -->
+    <div id="status" style="display:none"></div>
+
+    <!-- 库脚本 -->
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/chessboard/js/chessboard-1.0.0.min.js"></script>
+
+    <!-- 入口模块 -->
+    <script type="module" src="js/main.js"></script>
+
+</body>
+</html>

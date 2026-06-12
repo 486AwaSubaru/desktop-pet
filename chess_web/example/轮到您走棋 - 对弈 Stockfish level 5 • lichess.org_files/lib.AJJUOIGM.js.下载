@@ -1,0 +1,1 @@
+import{b as n,e as i,i as o}from"./lib.INYU5MCA.js";function t(e){return e()?o("div#blindfoldzone",[o("a#blindfoldtog.text",{attrs:i("\uE048"),hook:n("click",()=>e(!1))},i18n.preferences.blindfold)]):void 0}export{t as a};
